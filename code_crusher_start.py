@@ -11,6 +11,7 @@ import inspect
 import sys
 import traceback
 import os
+import tkinter as tk
 
 # Where is the 'hole' for the game board in the background image?
 HOFF = 200
@@ -42,32 +43,20 @@ r = createBoard(numLinhas,numColunas,numPecasUnicas)
 
 for i in r:
   print (i)
-  
 
-
-
-
-
-
-
-
-
-#
-#  Insert your implementation of createBoard here
-#
-
-#
-#  Modify the board by swapping two pieces.
-#
-#  Parameters:
-#    board: The game board to modify by swapping the pieces
-#    r1, c1: The row and column of the first piece involved in the swap
-#    r2, c2: The row and column of the second piece to swap
-#
-#  Returns: None -- the game board passed as a parameter is modified
-#
 def swap(board, r1, c1, r2, c2):
-  pass
+  board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]
+
+
+board = r
+
+r1, c1 = 1, 2
+r2, c2 = 1, 3
+
+swap(board,r1,c1,r2,c2)
+
+
+  
 
 #
 #  Modify the board to clear all occurences of a given piece, replacing them
