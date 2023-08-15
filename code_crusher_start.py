@@ -30,6 +30,7 @@ RUNNING = 0
 WIN = 1
 LOSE = -1
 
+#Implementação da função crateBoard()
 def createBoard(numLinhas,numColunas,numPecasUnicas):
   r = [[randrange(0,numPecasUnicas) for _ in range(numColunas)] for _ in range(numLinhas)]
   return r
@@ -44,6 +45,7 @@ r = createBoard(numLinhas,numColunas,numPecasUnicas)
 for i in r:
   print (i)
 
+#implementação da função swap()
 def swap(board, r1, c1, r2, c2):
   board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]
 
@@ -55,21 +57,19 @@ r2, c2 = 1, 3
 
 swap(board,r1,c1,r2,c2)
 
-
-  
-
-#
-#  Modify the board to clear all occurences of a given piece, replacing them
-#  with EMPTY.
-#
-#  Parameters:
-#    board: The game board to modify by swapping the pieces
-#    sym: The symbol that should be removed 
-#
-#  Returns: None -- the game board passed as a parameter is modified
-#
+#implementação da função clearAll()
 def clearAll(board, sym):
-  pass
+  for row in range(len(board)):
+    for col in range(len(board[0])):
+      if(board[row][col] == sym):
+        board[row][col] = EMPTY
+
+
+board = r
+sym = 4
+
+clearAll(board,sym)
+
 
 #
 #  Insert your implementations of vLineAt and hLineAt here
