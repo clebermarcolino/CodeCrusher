@@ -31,64 +31,80 @@ WIN = 1
 LOSE = -1
 
 #Implementação da função crateBoard()
-def createBoard(numLinhas,numColunas,numPecasUnicas):
-  r = [[randrange(0,numPecasUnicas) for _ in range(numColunas)] for _ in range(numLinhas)]
-  return r
+def createBoard(rows, cols, syms):
+    board = []
 
+    for r in range(rows):
+        board.append([])
+        for c in range(cols):
+            value = randrange(0, syms)
+            board[r].append(value)
 
-numLinhas = 6
-numColunas = 7
-numPecasUnicas = 6
-
-r = createBoard(numLinhas,numColunas,numPecasUnicas)
-
-for i in r:
-  print (i)
+    return board
 
 #implementação da função swap()
 def swap(board, r1, c1, r2, c2):
-  board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]
-
-
-board = r
-
-r1, c1 = 1, 2
-r2, c2 = 1, 3
-
-swap(board,r1,c1,r2,c2)
+    temp = board[r1][c1]
+    board[r1][c1] = board[r2][c2]
+    board[r2][c2] = temp
 
 #implementação da função clearAll()
 def clearAll(board, sym):
-  for row in range(len(board)):
-    for col in range(len(board[0])):
-      if(board[row][col] == sym):
-        board[row][col] = EMPTY
+    for r in range(len(board)):
+        for c, value in enumerate(board[r]):
+            if value == sym:
+                board[r][c] = EMPTY
 
+#implementação da função vLineAt()
+def vLineAt(board, row, col):
+    element = board[row][col]
+    
+    # Check the top position
+    if (0 <= row + 2 < len(board) 
+            and board[row + 1][col] == board[row + 2][col] == element):
+        return True
+    # Check the middle one
+    if (0 <= row - 1 and row + 1 < len(board)
+            and board[row - 1][col] == board[row + 1][col] == element):
+        return True
+    # Check the bottom one
+    if (0 <= row - 2 
+            and board[row - 1][col] == board[row - 2][col] == element):
+        return True
+    
+    return False
 
-board = r
-sym = 4
+#implementação da função hLineAt()
+def hLineAt(board, row, col):
+    element = board[row][col]
+    
+    # Check the top position
+    if (col + 2 < len(board[row])
+            and board[row][col + 1] == board[row][col + 2] == element):
+        return True
+    # Check the middle one
+    if (0 <= col - 1 and col + 1 < len(board[row])
+            and board[row][col - 1] == board[row][col + 1] == element):
+        return True
+    # Check the bottom one
+    if (0 <= col - 2
+            and board[row][col - 1] == board[row][col - 2] == element):
+        return True
+    
+    return False
 
-clearAll(board,sym)
-
-
-#
-#  Insert your implementations of vLineAt and hLineAt here
-#
-
-#
-#  Report whether or not two pieces on the board can be swapped.  The function
-#  should only return true when performing the swap results in a line being
-#  formed.
-#
-#  Parameters:
-#    board: The game board to be checked
-#    r1, c1: The row and column of the first piece involved in the swap
-#    r2, c2: The row and column of the second piece to swap
-#
-#  Returns: True if the proposed swap creates a line.  False otherwise.
-#
+#implementação da função canSwap()
 def canSwap(board, r1, c1, r2, c2):
-  return True
+    swap(board, r1, c1, r2, c2)
+
+    if (hLineAt(board, r1, c1) or hLineAt(board, r2, c2)
+            or vLineAt(board, r1, c1) or vLineAt(board, r2, c2)):
+        swap(board, r1, c1, r2, c2)
+        return True
+    else:
+        swap(board, r1, c1, r2, c2)
+        return False
+
 
 #
 #  Identify two adjacent positions on the board that can be swapped to 
